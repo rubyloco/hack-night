@@ -1,0 +1,31 @@
+* RubyLoco Flag Hack Night
+
+** flag.rb
+MVP emoji based solution.
+
+** flag.erl
+Erlang based flag generator. Eg:
+
+#+BEGIN_SRC text
+Eshell V6.4  (abort with ^G)
+1> c(flag).
+{ok,flag}
+2> Worker = flag:start_link().
+<0.39.0>
+3> Worker ! {self(), is_it_ready}.
+Yeah, <0.32.0>
+Not yet
+{<0.32.0>,is_it_ready}
+4> Worker ! {self(), is_it_ready}.
+Yeah, <0.32.0>
+Getting Closer
+{<0.32.0>,is_it_ready}
+5> Worker ! {self(), is_it_ready}.
+Yeah, <0.32.0>
+9::::=======
+|::::=======
+|===========
+|===========
+{<0.32.0>,is_it_ready}
+6> 
+#+END_SRC

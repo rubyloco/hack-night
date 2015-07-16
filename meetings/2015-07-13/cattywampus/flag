@@ -1,0 +1,71 @@
+#!/usr/bin/env ruby
+
+def red(string)
+  "\e[37;41m#{string}\e[0m"
+end
+
+def white(string)
+  "\e[30;47m#{string}\e[0m"
+end
+
+def blue(string)
+  "\e[1;37;44m#{string}\e[0m"
+end
+
+max_width = `tput cols`.to_i
+stars_width = max_width * 0.40
+spacing = (stars_width / 6).to_i
+
+flag = []
+
+# Fill flab with red and white stripes
+(0..25).step(2).each_with_index do |row, index|
+  flag[row] = (" " * max_width).split(//).map { |c| index.even? ? red(c) : white(c) }
+  flag[row+1] = (" " * max_width).split(//).map { |c| index.even? ? red(c) : white(c) }
+end
+
+# Update top left corner with the stars
+14.times do |row|
+  stars_width.to_i.times do |col|
+    char = " "
+    case row % 3
+    when 0  # render a 6 star row
+      char = "*" if (col - (spacing/2)) % spacing == 0
+    when 1  # render a 5 star row
+      char = "*" if row != 13 && col >= spacing && col % spacing == 0
+    end
+    flag[row][col] = blue(char)
+  end
+end
+
+gutter = 2
+increment = 0
+step = 0.75
+
+canvas = Array.new(flag.length + (2*gutter)) { Array.new(max_width, nil) }
+
+loop do
+  # Reset top and bottom gutters of canvas to be blank
+  (2*gutter).times do |row|
+    canvas[row] = Array.new(max_width, " ")
+    canvas[canvas.length-row-1] = Array.new(max_width, " ")
+  end
+
+  # Copy flag to canvas and offset each column using `Math.sin`
+  # so it looks like it's waving
+  flag.each_with_index do |row, rindex|
+    row.each_with_index do |col, cindex|
+      x = (cindex / row.length.to_f) * (2 * Math::PI) + increment
+      offset = Math.sin(x) * gutter
+      canvas[rindex+gutter+offset][cindex] = flag[rindex][cindex]
+    end
+  end
+
+  canvas.each do |row|
+    puts row.join
+  end
+
+  increment += step
+  sleep 0.25
+end
+

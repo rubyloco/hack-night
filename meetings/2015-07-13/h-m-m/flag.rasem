@@ -1,19 +1,43 @@
-set_width 247
-set_height 130
+@hoist = 520
+@fly = @hoist * 1.9
+
+set_height @hoist
+set_width @fly
+
 
 group fill: "white", stroke: "white" do
-  (0..12).each do |stripe_offset|
-    rectangle 0, (0 + stripe_offset * 20), 247, 10
+  (0..6).each do |stripe_offset|
+    rectangle 0, (1 + stripe_offset * 2) * @hoist / 13.0, @fly, @hoist / 13.0
   end
 end
 
 group fill: "red", stroke: "red" do
-  (0..12).each do |stripe_offset|
-    rectangle 0, 10 + (stripe_offset * 20), 247, 10
+  (0..7).each do |stripe_offset|
+    rectangle 0, stripe_offset * 2 * @hoist / 13.0, @fly, @hoist / 13.0
   end
 end
 
 group fill: "blue" do
-  rectangle 0, 0, 130 * 0.76, 130 * 8 / 13
+  rectangle 0, 0, @hoist * 0.76, @hoist * 7 / 13.0
 end
 
+def star(x, y, size = @hoist * 0.0616 / 2)
+  polygon( x       , y - size,
+           x + size, y       ,
+           x       , y + size,
+           x - size, y)
+end
+
+group fill: "white" do
+  (0..4).each do |odd_row_offset|
+    (0..5).each do |star_offset|
+      star( @hoist * 0.063 * ( 1 + 2 * star_offset), @hoist * 0.054 * (1 + 2 * odd_row_offset))
+    end
+  end
+
+  (0..3).each do |even_row_offset|
+    (0..4).each do |star_offset|
+      star(@hoist * 0.063 * ( 2 + 2 * star_offset), @hoist * 0.054 * (2 + 2 * even_row_offset))
+    end
+  end
+end

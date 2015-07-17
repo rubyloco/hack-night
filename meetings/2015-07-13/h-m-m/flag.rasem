@@ -1,0 +1,19 @@
+set_width 247
+set_height 130
+
+group fill: "white", stroke: "white" do
+  (0..12).each do |stripe_offset|
+    rectangle 0, (0 + stripe_offset * 20), 247, 10
+  end
+end
+
+group fill: "red", stroke: "red" do
+  (0..12).each do |stripe_offset|
+    rectangle 0, 10 + (stripe_offset * 20), 247, 10
+  end
+end
+
+group fill: "blue" do
+  rectangle 0, 0, 130 * 0.76, 130 * 8 / 13
+end
+

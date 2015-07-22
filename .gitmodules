@@ -1,0 +1,3 @@
+[submodule "meetings/2015-07-13/shadowbq"]
+	path = meetings/2015-07-13/shadowbq
+	url = git://github.com/shadowbq/shadowbq-loco-flag

@@ -1,0 +1,12 @@
+GEM
+  specs:
+    rasem (0.6.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rasem
+
+BUNDLED WITH
+   1.10.5
